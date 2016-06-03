@@ -1,0 +1,239 @@
+<!DOCTYPE HTML>
+<!--
+	Escape Velocity by HTML5 UP
+	html5up.net | @n33co
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Escape Velocity by HTML5 UP</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+	</head>
+	<body class="homepage">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<div id="header-wrapper" class="wrapper">
+					<div id="header">
+
+						<!-- Logo -->
+							
+
+						<!-- Nav -->
+							<nav id="nav">
+								<ul>
+									<li class="current"><a href="index.html">Home</a></li>
+									<li>
+										<a href="AR.HTML">AR CONDICIONADO</a>
+										
+										<a href="LAMPADA.HTML">LÂMPADAS</a>
+										
+									<li>
+												
+
+								</ul>
+							</nav>
+
+					</div>
+				</div>
+
+
+
+				   <p>
+										<h4>Rele1</h4>
+										
+										<div class="btn-group">
+										 <button type="button" class="botaoEnvia" id="001"><span id="rele1" ></button>
+										 
+										</div>
+										
+									</p>
+									<p>
+										<h4>Rele2</h4>
+										
+										<div class="btn-group">
+										 <button type="button" class="botaoEnvia" id="001"><span id="rele2" ></button>
+										</div>
+							
+									</p>
+									<p>
+									<p>
+										<h4>Rele3</h4>
+										
+										<div class="btn-group">
+										  <button type="button" class="botaoEnvia" id="001"><span id="rele3" ></button>
+										</div>
+										
+									</p>
+									<p>
+										<h4>Rele4</h4>
+								
+										<div class="btn-group">
+										 <button type="button" class="botaoEnvia" id="001"><span id="rele4" ></button>
+										</div>
+										
+									</p>
+									<p>
+									<p>
+										<h4>Rele5</h4>
+
+										
+										<div class="btn-group">
+										  <button type="button" class="botaoEnvia" id="001"><span id="rele5" ></button>
+										</div>
+										
+									</p>
+									<p>
+										<h4>Rele6</h4>
+										
+										<div class="btn-group">
+										  <button type="button" class="botaoEnvia" id="001"><span id="rele6" ></button>
+										</div>
+									
+									</p>
+									<p>
+									<p>
+										<h4>Rele7</h4>
+									
+										<div class="btn-group">
+										  <button type="button" class="botaoEnvia" id="001"><span id="rele7" ></button>
+										</div>
+									
+									</p>
+									<p>
+										<h4>Rele8</h4>
+
+										
+										
+										<div class="btn-group">
+										 <button type="button" class="botaoEnvia" id="001"><span id="rele8" ></button>
+										</div>
+										
+									</p>
+
+				        		
+			
+		</div>
+
+		<!-- Scripts -->
+
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/skel-viewport.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+
+	</body>
+	<script type="text/javascript">
+//var url = 'http://177.177.165.14:50';
+var url = 'http://192.168.0.10:8090';
+/*
+google.load("visualization", "1", {packages:["corechart"]});
+google.setOnLoadCallback(drawChart);
+	var data; 
+	var chart;
+	var options = {
+		title: 'Dados dos Sensores ArduinoComAjax',
+		curveType: 'function'
+	};
+*/
+$(document).ready(function(){
+	$('.botaoEnvia').click(function(){
+        var valor = $(this).attr('id');
+        enviaDados(valor);
+        
+    });
+	
+	function enviaDados(dado){		
+    	$.ajax({
+		    url: url,
+		    data: { 'acao': dado},
+		    dataType: 'jsonp',
+		    crossDomain: true,
+		    jsonp: false,
+		    jsonpCallback: 'dados',
+		    success: function(data,status,xhr) {
+				// posso ler dados e retoranar na pagina para avisar se a luz ta ligada ou desligada.
+				//console.log(data.LUZ1);
+			//	console.log(data.LUZ2);
+				//$('#resultLUZ1').text(statusReturn(data.LUZ1)); 
+				//$('#resultLUZ2').text(statusReturn(data.LUZ2));
+		    }
+		  });
+        return false;
+    }
+	function statusReturn (valor) {
+    	if(valor == 0) {
+    		return "Ligada";
+    	}
+    	else if(valor == 1) {
+    		return "Desligada";
+    	}
+    	 else { return "Desconhecido";}
+    }
+
+    //var i = 0;
+	function fazerRequisicao(){
+		$('#status').removeClass('label-success').addClass('label-warning');
+		$('#status').text("Enviando Requisição...");
+    	$.ajax({
+		    url: url,
+		    data: { '': ''}, // usaremos em proximas versões
+		    dataType: 'jsonp', // IMPORTANTE
+		    crossDomain: true, // IMPORTANTE
+		    jsonp: false,
+		    jsonpCallback: 'dados', // IMPORTANTE
+		    success: function(data,status,xhr) {
+				$('#status').removeClass('label-warning').addClass('label-success')
+				$('#status').text("Requisição Recebida!");
+				$('#rele1').text(data.rele1);
+				$('#rele2').text(data.rele2);
+				$('#rele3').text(data.rele3);
+				$('#rele4').text(data.rele4);
+				$('#rele5').text(data.rele5);
+				$('#rele6').text(data.rele6);
+				$('#rele7').text(data.rele7);
+				$('#rele8').text(data.rele8);
+				$('#potencia').text(data.potencia);
+				$('#velocidade').text(data.velocidade);
+				$('#temp').text(data.temp);
+				$('#ar').text(data.ar);
+				//$('#resultLUZ1').text(statusReturn(data.LUZ1));
+				//$('#resultLUZ2').text(statusReturn(data.LUZ2));
+				//i++;
+				//setGrafico(i,data.sensor1,data.sensor2);
+				console.log(data);
+		    }
+		  });
+        return false;
+    }
+
+    // A cada 1000 milis (1 segundo), faça uma nova requisição.
+    setInterval(fazerRequisicao, 500);
+  	// Acredito que 3000 (3 segundos) ou mais seja o ideal para um serviço online.
+  	// Caso use local host, arrisco colocar ate 400 milis, você tera uma boa resposta. 
+});
+
+/*function drawChart() {
+  		data = new google.visualization.DataTable();
+		data.addColumn('number', 'Registro'); // Implicit domain column.
+		data.addColumn('number', 'Sensor1'); // Implicit data column.
+		data.addColumn('number', 'Sensor2'); // Implicit data column.
+		data.addRow();
+    }
+	/*
+	function setGrafico(i, sensor1,sensor2){
+		data.addRow([i,sensor1,sensor2]);
+        chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+        return false;
+	}*/
+  
+</script>
+</html>
